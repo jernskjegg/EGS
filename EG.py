@@ -40,7 +40,7 @@ finalStr = str(finalDict)
 finalStr = finalStr.replace("'", "").replace('"', '')
 
 webhookUrl = "yourWebhookURLHere"
-slackNotif = {"text": pfinalStr.strip("{}")}
+slackNotif = {"text": finalStr.strip("{}")}
 
 response = requests.post(webhookUrl, data=json.dumps(slackNotif))
 error = ("Request returned error code {}, the response is: {}").format(response.status_code, response.text)
