@@ -30,6 +30,8 @@ def extract_values(obj, key):
 games = extract_values(data, "title")
 images = extract_values(data, "url")
 images = images[2:4]
+
+images = [char.replace(" ", "%20") for char in images]
   
 finalDict = dict(zip(games, images))
 for key in list(finalDict.keys()):
