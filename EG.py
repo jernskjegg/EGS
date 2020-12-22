@@ -6,44 +6,50 @@ url = "https://store-site-backend-static.ak.epicgames.com/freeGamesPromotions?lo
 response = urllib.request.urlopen(url)
 data = json.loads(response.read())
 
-def extract_values(obj, key):
-    #Function ̶b̶l̶a̶t̶a̶n̶t̶l̶y̶ ̶s̶t̶o̶l̶e̶n̶ borrowed from Todd Birchard https://gist.github.com/toddbirchard/b6f86f03f6cf4fc9492ad4349ee7ff8b
-    """Pull all values of specified key from nested JSON."""
-    arr = []
+check = data["data"]["Catalog"]["searchStore"]["elements"][0].get("customAttributes")
+isGameVaulted = check[4]
+check1 = data["data"]["Catalog"]["searchStore"]["elements"][1].get("customAttributes")
+isGameVaulted1 = check1[4]
+check2 =  data["data"]["Catalog"]["searchStore"]["elements"][2].get("customAttributes")
+isGameVaulted2 = check2[4]
+check3 =  data["data"]["Catalog"]["searchStore"]["elements"][3].get("customAttributes")
+isGameVaulted3 = check3[4]
+try:
+    game = data["data"]["Catalog"]["searchStore"]["elements"][0].get("title")
+    image = data["data"]["Catalog"]["searchStore"]["elements"][0].get("keyImages")
+    image = image[1].get("url")
+except IndexError:
+    print("You stare too deep into the void. The void stares back.")
+try:
+    game1 =  data["data"]["Catalog"]["searchStore"]["elements"][1].get("title")
+    image1 = data["data"]["Catalog"]["searchStore"]["elements"][1].get("keyImages")
+    image1 = image1[1].get("url")
+except IndexError:
+    print("You stare too deep into the void. The void stares back.")
+try:
+    game2 = data["data"]["Catalog"]["searchStore"]["elements"][2].get("title")
+    image2 = data["data"]["Catalog"]["searchStore"]["elements"][2].get("keyImages")
+    image2 = image2[1].get("url")
+except IndexError:
+    print("You stare too deep into the void. The void stares back.")
+try:
+    game3 = data["data"]["Catalog"]["searchStore"]["elements"][3].get("title")
+    image3 = data["data"]["Catalog"]["searchStore"]["elements"][3].get("keyImages")
+    image3 = image3[1].get("url")
+except IndexError:
+    print("You stare too deep into the void. The void stares back.")
 
-    def extract(obj, arr, key):
-        """Recursively search for values of key in JSON tree."""
-        if isinstance(obj, dict):
-            for k, v in obj.items():
-                if isinstance(v, (dict, list)):
-                    extract(v, arr, key)
-                elif k == key:
-                    arr.append(v)
-        elif isinstance(obj, list):
-            for item in obj:
-                extract(item, arr, key)
-        return arr
+allImages = [image, image1, image2, image3]
+allGames = [game, game1, game2, game3]
 
-    results = extract(obj, arr, key)
-    return results
-
-games = extract_values(data, "title")
-images = extract_values(data, "url")
-images = images[2:4]
-
-images = [char.replace(" ", "%20") for char in images]
-  
-finalDict = dict(zip(games, images))
+finalDict = dict(zip(allGames, allImages))
 for key in list(finalDict.keys()):
     if key == "Mystery Game":
         finalDict.pop(key)
         
 finalStr = str(finalDict)
-finalStr = finalStr.replace("'", "").replace('"', '')
-
 webhookUrl = "yourWebhookURLHere"
 slackNotif = {"text": finalStr.strip("{}")}
-
 response = requests.post(webhookUrl, data=json.dumps(slackNotif))
 error = ("Request returned error code {}, the response is: {}").format(response.status_code, response.text)
 if response.status_code != 200:
