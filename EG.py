@@ -7,19 +7,18 @@ response = urllib.request.urlopen(url)
 data = json.loads(response.read())
 
 check = data["data"]["Catalog"]["searchStore"]["elements"][0].get("customAttributes")
-isGameVaulted = check[4]
 check1 = data["data"]["Catalog"]["searchStore"]["elements"][1].get("customAttributes")
-isGameVaulted1 = check1[4]
 check2 =  data["data"]["Catalog"]["searchStore"]["elements"][2].get("customAttributes")
-isGameVaulted2 = check2[4]
 check3 =  data["data"]["Catalog"]["searchStore"]["elements"][3].get("customAttributes")
-isGameVaulted3 = check3[4]
+check4 = data["data"]["Catalog"]["searchStore"]["elements"][4].get("customAttributes")
+check5 = data["data"]["Catalog"]["searchStore"]["elements"][5].get("customAttributes")
 try:
     game = data["data"]["Catalog"]["searchStore"]["elements"][0].get("title")
     image = data["data"]["Catalog"]["searchStore"]["elements"][0].get("keyImages")
     image = image[1].get("url")
 except IndexError:
     print("You stare too deep into the void. The void stares back.")
+       
 try:
     game1 =  data["data"]["Catalog"]["searchStore"]["elements"][1].get("title")
     image1 = data["data"]["Catalog"]["searchStore"]["elements"][1].get("keyImages")
@@ -38,9 +37,21 @@ try:
     image3 = image3[1].get("url")
 except IndexError:
     print("You stare too deep into the void. The void stares back.")
+try:
+    game4 = data["data"]["Catalog"]["searchStore"]["elements"][4].get("title")
+    image4 = data["data"]["Catalog"]["searchStore"]["elements"][4].get("keyImages")
+    image4 = image4[1].get("url")
+except IndexError:
+    print("You stare too deep into the void. The void stares back.")
+try:
+    game5 = data["data"]["Catalog"]["searchStore"]["elements"][5].get("title")
+    image5 = data["data"]["Catalog"]["searchStore"]["elements"][5].get("keyImages")
+    image5 = image5[1].get("url")
+except IndexError:
+    print("You stare too deep into the void. The void stares back.")
 
-allImages = [image, image1, image2, image3]
-allGames = [game, game1, game2, game3]
+allImages = [image, image1, image2, image3, image4, image5]
+allGames = [game, game1, game2, game3, game4, game5]
 
 finalDict = dict(zip(allGames, allImages))
 for key in list(finalDict.keys()):
