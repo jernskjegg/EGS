@@ -46,7 +46,7 @@ def FixTime(listFixed, listEGS):
     month2 = str(listEGS[5]) + str(listEGS[6])
     day2 = str(listEGS[8]) + str(listEGS[9])
     date2 = str(day2+"/"+month2+"/"+year2)
-    if date2 > day1 == False:
+    if date2 > date1 == False:
         return False
 try:
     Bool = FixTime(timeNowForm, check)
