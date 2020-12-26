@@ -32,6 +32,16 @@ except IndexError:
     print("Game4's vaulted, no date assigned. Giving check3 an empty value")
     check3 = []
 isGameVaulted3 = check3
+try:
+    check4 = data["data"]["Catalog"]["searchStore"]["elements"][4]["promotions"]["promotionalOffers"][0]["promotionalOffers"][0].get("endDate")
+except IndexError:
+    print("Game5's vaulted, no date assigned. Giving check4 an empty value")
+    check4 = []
+try:
+    check5 = data["data"]["Catalog"]["searchStore"]["elements"][5]["promotions"]["promotionalOffers"][0]["promotionalOffers"][0].get("endDate")
+except IndexError:
+    print("Game6's vaulted, no date assigned. Giving check5 an empty value")
+    check5 = []
 
 timeNow = dt.datetime.today()
 timeNowForm = str(timeNow.strftime("%Y-%D%H%M%SZ"))
@@ -64,6 +74,14 @@ try:
     Bool3 = FixTime(timeNowForm, check3)
 except IndexError:
     print("Ignoring vaulted game")
+try:
+    Bool4 = FixTime(timeNowForm, check4)
+except IndexError:
+    print("Ignoring vaulted game")
+try:
+    Bool5 = FixTime(timeNowForm, check5)
+except IndexError:
+    print("Ignoring vaulted game")
 
 try:
     if not Bool == True:
@@ -74,7 +92,7 @@ try:
         except IndexError:
             print("You stare too deep into the void. The void stares back.")
     else:
-        print("Game1 has been vaulted.")
+        print("Game #1 has been vaulted.")
 except NameError:
     game = ""
     image = ""
@@ -88,7 +106,7 @@ try:
         except IndexError:
             print("You stare too deep into the void. The void stares back.")
     else:
-        print("Game2 has been vaulted.")
+        print("Game #2 has been vaulted.")
 except NameError:
     game1 = ""
     image1 = ""
@@ -102,7 +120,7 @@ try:
         except IndexError:
             print("You stare too deep into the void. The void stares back.")
     else:
-        print("Game3 has been vaulted.")  
+        print("Game #3 has been vaulted.")  
 except NameError:
     game2 = ""
     image2 = ""
@@ -116,14 +134,55 @@ try:
         except IndexError:
             print("You stare too deep into the void. The void stares back.")
     else:
-        print("Game4 has been vaulted.")
+        print("Game #4 has been vaulted.")
 except NameError:
     game3 = ""
     image3 = ""
     pass
-
-allImages = [image, image1, image2, image3]
-allGames = [game, game1, game2, game3]
+try:
+    if not Bool4 == True:
+        try:
+            game4 = data["data"]["Catalog"]["searchStore"]["elements"][4].get("title")
+            image4 = data["data"]["Catalog"]["searchStore"]["elements"][4].get("keyImages")
+            image4 = image4[1].get("url")
+        except IndexError:
+            print("You stare too deep into the void. The void stares back.")
+    else:
+        print("Game #5 has been vaulted.")
+except NameError:
+    game4 = ""
+    image4 = ""
+    pass
+try:
+    if not Bool5 == True:
+        try:
+            game5 = data["data"]["Catalog"]["searchStore"]["elements"][5].get("title")
+            image5 = data["data"]["Catalog"]["searchStore"]["elements"][5].get("keyImages")
+            image5 = image5[1].get("url")
+        except IndexError:
+            print("You stare too deep into the void. The void stares back.")
+    else:
+        print("Game #6 has been vaulted.")
+except NameError:
+    game5 = ""
+    image5 = ""
+    pass
+try:
+    if not Bool6 == True:
+        try:
+            game6 = data["data"]["Catalog"]["searchStore"]["elements"][6].get("title")
+            image6 = data["data"]["Catalog"]["searchStore"]["elements"][6].get("keyImages")
+            image6 = image6[1].get("url")
+        except IndexError:
+            print("You stare too deep into the void. The void stares back.")
+    else:
+        print("Game #7 has been vaulted.")
+except NameError:
+    game6 = ""
+    image6 = ""
+    pass
+allImages = [image, image1, image2, image3, image4, image5, image6]
+allGames = [game, game1, game2, game3, game4, game5, game6]
 
 finalDict = dict(zip(allGames, allImages))
 for key in list(finalDict.keys()):
@@ -136,7 +195,7 @@ for key in list(finalDict.keys()):
 finalStr = str(finalDict)
 #finalStr2 = finalStr.replace(":", "").replace('"', '')
 
-webhookUrl = "yourWebhookUrlHere"
+webhookUrl = "yourWebhookURLHere"
 slackNotif = {"text": finalStr.strip("{}")}
 
 response = requests.post(webhookUrl, data=json.dumps(slackNotif))
