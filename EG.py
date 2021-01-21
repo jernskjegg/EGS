@@ -8,12 +8,11 @@ url = "https://store-site-backend-static.ak.epicgames.com/freeGamesPromotions?lo
 response = urllib.request.urlopen(url)
 data = json.loads(response.read())
 
-loop = True
 idx = 0
 listOfDates = []
-while loop:
+for i in range(0,8):
     try:
-        checkTest = data["data"]["Catalog"]["searchStore"]["elements"][idx]["promotions"]["promotionalOffers"][0]["promotionalOffers"][0]
+        checkTest = data["data"]["Catalog"]["searchStore"]["elements"][idx]["promotions"]["promotionalOffers"][0]["promotionalOffers
         if "startDate" in checkTest.keys():
             takeDate = checkTest.get("startDate")
             listOfDates.append(takeDate)
@@ -21,7 +20,7 @@ while loop:
         else:
             listOfDates.append(None)
     except IndexError:
-        loop = False
+        pass
 
 timeNow = dt.datetime.today()
 timeNowForm = str(timeNow.strftime("%Y-%D%H%M%SZ"))
