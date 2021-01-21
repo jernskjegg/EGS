@@ -12,7 +12,7 @@ idx = 0
 listOfDates = []
 for i in range(0,8):
     try:
-        checkTest = data["data"]["Catalog"]["searchStore"]["elements"][idx]["promotions"]["promotionalOffers"][0]["promotionalOffers
+        checkTest = data["data"]["Catalog"]["searchStore"]["elements"][idx]["promotions"]["promotionalOffers"][0]["promotionalOffers"]
         if "startDate" in checkTest.keys():
             takeDate = checkTest.get("startDate")
             listOfDates.append(takeDate)
