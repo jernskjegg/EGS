@@ -12,6 +12,9 @@ check2 =  data["data"]["Catalog"]["searchStore"]["elements"][2].get("customAttri
 check3 =  data["data"]["Catalog"]["searchStore"]["elements"][3].get("customAttributes")
 check4 = data["data"]["Catalog"]["searchStore"]["elements"][4].get("customAttributes")
 check5 = data["data"]["Catalog"]["searchStore"]["elements"][5].get("customAttributes")
+check6 = data["data"]["Catalog"]["searchStore"]["elements"][6].get("customAttributes")
+check7 = data["data"]["Catalog"]["searchStore"]["elements"][7].get("customAttributes")
+
 try:
     game = data["data"]["Catalog"]["searchStore"]["elements"][0].get("title")
     image = data["data"]["Catalog"]["searchStore"]["elements"][0].get("keyImages")
@@ -49,9 +52,21 @@ try:
     image5 = image5[1].get("url")
 except IndexError:
     print("You stare too deep into the void. The void stares back.")
+try:
+    game6 = data["data"]["Catalog"]["searchStore"]["elements"][6].get("title")
+    image6 = data["data"]["Catalog"]["searchStore"]["elements"][6].get("keyImages")
+    image6 = image6[1].get("url")
+except IndexError:
+    print("You stare too deep into the void. The void stares back.")
+try:
+    game7 = data["data"]["Catalog"]["searchStore"]["elements"][7].get("title")
+    image7 = data["data"]["Catalog"]["searchStore"]["elements"][7].get("keyImages")
+    image7 = image7[1].get("url")
+except IndexError:
+    print("You stare too deep into the void. The void stares back.")
 
-allImages = [image, image1, image2, image3, image4, image5]
-allGames = [game, game1, game2, game3, game4, game5]
+allImages = [image, image1, image2, image3, image4, image5, image6, image7]
+allGames = [game, game1, game2, game3, game4, game5, game6, game7]
 
 finalDict = dict(zip(allGames, allImages))
 for key in list(finalDict.keys()):
