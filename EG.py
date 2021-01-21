@@ -18,7 +18,7 @@ for i in range(0,8):
             listOfDates.append(takeDate)
             idx = idx + 1
         else:
-            listOfDates.append(None)
+            listOfDates.append("X")
     except IndexError:
         pass
 
