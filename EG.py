@@ -11,7 +11,7 @@ data = json.loads(response.read())
 listOfDates = []
 for i in range(0,25):
     try:
-        checkTest = data["data"]["Catalog"]["searchStore"]["elements"][i]["promotions"]["promotionalOffers"
+        checkTest = data["data"]["Catalog"]["searchStore"]["elements"][i]["promotions"]["promotionalOffers"][0]["promotionalOffers"][0]
         if "startDate" in checkTest.keys():
             takeDate = checkTest.get("startDate")
             listOfDates.append(takeDate)
