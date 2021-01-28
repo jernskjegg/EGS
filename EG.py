@@ -8,6 +8,7 @@ url = "https://store-site-backend-static.ak.epicgames.com/freeGamesPromotions?lo
 response = urllib.request.urlopen(url)
 data = json.loads(response.read())
 
+markPos= []
 listOfDates = []
 for i in range(0,25):
     try:
@@ -15,6 +16,7 @@ for i in range(0,25):
         if "startDate" in checkTest.keys():
             takeDate = checkTest.get("startDate")
             listOfDates.append(takeDate)
+            markPos.append(i)
         else:
             listOfDates.append("X")
     except (TypeError, IndexError):
@@ -25,16 +27,15 @@ timeNowForm = str(timeNow.strftime("%Y-%D%H%M%SZ"))
 
 games=[]
 imageURLs = []
-for date in listOfDates:
-   if date < timeNowForm:
-       try:
-           for i in range(len(listOfDates)) :
-               games.append(data["data"]["Catalog"]["searchStore"]["elements"][i].get("title"))
-               imageURLs.append(data["data"]["Catalog"]["searchStore"]["elements"][i]["keyImages"][1].get("url"))
-       except IndexError:
-            pass
-   else:
-       imageURLS.append("This game is probably vaulted")
+if takeDate < timeNowForm:
+    try:
+        for i in markPos :
+            games.append(data["data"]["Catalog"]["searchStore"]["elements"][i].g
+            imageURLs.append(data["data"]["Catalog"]["searchStore"]["elements"][
+    except IndexError:
+        pass
+else:
+    imageURLs.append("This game is probably vaulted")
         
 finalDict = dict(zip(games, imageURLs))
 for key in list(finalDict.keys()):
