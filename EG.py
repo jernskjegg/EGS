@@ -5,70 +5,16 @@ import urllib
 url = "https://store-site-backend-static.ak.epicgames.com/freeGamesPromotions?locale=en-US&country=NO&allowCountries=NO"
 response = urllib.request.urlopen(url)
 data = json.loads(response.read())
+games=[]
+images=[]
+for i in range(0,25):
+    try:
+        games.append(data["data"]["Catalog"]["searchStore"]["elements"][i].get("title"))
+        images.append(data["data"]["Catalog"]["searchStore"]["elements"][i].get("keyImages")[1].get("url"))
+    except (IndexError, TypeError):
+        pass
 
-check = data["data"]["Catalog"]["searchStore"]["elements"][0].get("customAttributes")
-check1 = data["data"]["Catalog"]["searchStore"]["elements"][1].get("customAttributes")
-check2 =  data["data"]["Catalog"]["searchStore"]["elements"][2].get("customAttributes")
-check3 =  data["data"]["Catalog"]["searchStore"]["elements"][3].get("customAttributes")
-check4 = data["data"]["Catalog"]["searchStore"]["elements"][4].get("customAttributes")
-check5 = data["data"]["Catalog"]["searchStore"]["elements"][5].get("customAttributes")
-check6 = data["data"]["Catalog"]["searchStore"]["elements"][6].get("customAttributes")
-check7 = data["data"]["Catalog"]["searchStore"]["elements"][7].get("customAttributes")
-
-try:
-    game = data["data"]["Catalog"]["searchStore"]["elements"][0].get("title")
-    image = data["data"]["Catalog"]["searchStore"]["elements"][0].get("keyImages")
-    image = image[1].get("url")
-except IndexError:
-    print("You stare too deep into the void. The void stares back.")
-       
-try:
-    game1 =  data["data"]["Catalog"]["searchStore"]["elements"][1].get("title")
-    image1 = data["data"]["Catalog"]["searchStore"]["elements"][1].get("keyImages")
-    image1 = image1[1].get("url")
-except IndexError:
-    print("You stare too deep into the void. The void stares back.")
-try:
-    game2 = data["data"]["Catalog"]["searchStore"]["elements"][2].get("title")
-    image2 = data["data"]["Catalog"]["searchStore"]["elements"][2].get("keyImages")
-    image2 = image2[1].get("url")
-except IndexError:
-    print("You stare too deep into the void. The void stares back.")
-try:
-    game3 = data["data"]["Catalog"]["searchStore"]["elements"][3].get("title")
-    image3 = data["data"]["Catalog"]["searchStore"]["elements"][3].get("keyImages")
-    image3 = image3[1].get("url")
-except IndexError:
-    print("You stare too deep into the void. The void stares back.")
-try:
-    game4 = data["data"]["Catalog"]["searchStore"]["elements"][4].get("title")
-    image4 = data["data"]["Catalog"]["searchStore"]["elements"][4].get("keyImages")
-    image4 = image4[1].get("url")
-except IndexError:
-    print("You stare too deep into the void. The void stares back.")
-try:
-    game5 = data["data"]["Catalog"]["searchStore"]["elements"][5].get("title")
-    image5 = data["data"]["Catalog"]["searchStore"]["elements"][5].get("keyImages")
-    image5 = image5[1].get("url")
-except IndexError:
-    print("You stare too deep into the void. The void stares back.")
-try:
-    game6 = data["data"]["Catalog"]["searchStore"]["elements"][6].get("title")
-    image6 = data["data"]["Catalog"]["searchStore"]["elements"][6].get("keyImages")
-    image6 = image6[1].get("url")
-except IndexError:
-    print("You stare too deep into the void. The void stares back.")
-try:
-    game7 = data["data"]["Catalog"]["searchStore"]["elements"][7].get("title")
-    image7 = data["data"]["Catalog"]["searchStore"]["elements"][7].get("keyImages")
-    image7 = image7[1].get("url")
-except IndexError:
-    print("You stare too deep into the void. The void stares back.")
-
-allImages = [image, image1, image2, image3, image4, image5, image6, image7]
-allGames = [game, game1, game2, game3, game4, game5, game6, game7]
-
-finalDict = dict(zip(allGames, allImages))
+finalDict = dict(zip(games, images))
 for key in list(finalDict.keys()):
     if key == "Mystery Game":
         finalDict.pop(key)
